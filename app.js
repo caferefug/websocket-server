@@ -21,6 +21,7 @@ connection.connect(function(err) {
 
   console.log('connected as id ' + connection.threadId);
 });
+connection.query('USE 2it8h_development');
 
 const tero_id = -1;
 
