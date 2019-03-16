@@ -53,7 +53,7 @@ wss.on('connection', (ws) => {
                     }
                     return;
                 } else {
-                    console.log("wait for connection...")
+//                    console.log("wait for connection...")
                     waitForSocketConnection(socket, callback);
                 }
             }, 5); // wait 5 milisecond for the connection...
