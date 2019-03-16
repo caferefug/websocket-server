@@ -9,8 +9,11 @@
     "npm": "2.12.0"
   },
   "dependencies": {
-    "express": "*",
+    "bufferutil": "4.0.1",
+    "express": "4.16.4",
     "http": "*",
-    "socket.io": "*"
+    "socket.io": "*",
+    "utf-8-validate": "5.0.2",
+    "ws": "6.2.0"
   }
 }
