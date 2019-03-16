@@ -32,9 +32,9 @@ const wss = new SocketServer({ server });
 
 wss.on('connection', (ws) => {
   console.log('Client connected');
-  wss.on('close', () => console.log('Client disconnected'));
+  ws.on('close', () => console.log('Client disconnected'));
 
-  wss.on('message', msg => {
+  ws.on('message', msg => {
       console.log("got");
       console.log(msg);
       if (msg.type === 'utf8' && msg.split(' ')[0] === "tero_id") {
