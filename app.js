@@ -35,16 +35,18 @@ wss.on('connection', (ws) => {
   wss.on('close', () => console.log('Client disconnected'));
 
   wss.on('message', msg => {
+      console.log("got");
+      console.log(msg);
       if (msg.type === 'utf8' && msg.split(' ')[0] === "tero_id") {
          tero_id = msg.split(' ')[1]; 
       }
   });
 
   setInterval(() => {
-    console.log(tero_id);
+    //console.log(tero_id);
     connection.query(`SELECT type FROM Feedback WHERE tero_id='${tero_id}'`, function (error, results, fields) {
-        console.log(error);
-        console.log(results);
+        //console.log(error);
+        //console.log(results);
     }); 
   }, 1000);
 });
