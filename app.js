@@ -36,6 +36,7 @@ wss.on('connection', (ws) => {
   ws.on('close', () => console.log('Client disconnected'));
 
   ws.on('message', msg => {
+      console.log(msg.split(' ')[0]);
       if (msg.type === 'utf8' && msg.split(' ')[0] === "tero_id") {
          tero_id = msg.split(' ')[1]; 
       }
