@@ -23,7 +23,7 @@ connection.connect(function(err) {
 });
 connection.query('USE 2it8h_development');
 
-const tero_id = -1;
+let tero_id = -1;
 
 const server = express()
   .use((req, res) => res.sendFile(INDEX) )
