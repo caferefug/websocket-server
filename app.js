@@ -23,8 +23,6 @@ connection.connect(function(err) {
 });
 connection.query('USE 2it8h_development');
 
-let tero_id = -1;
-
 const server = express()
   .use((req, res) => res.sendFile(INDEX) )
   .listen(PORT, () => console.log(`Listening on ${ PORT }`));
@@ -33,6 +31,7 @@ const wss = new SocketServer({ server });
 
 
 wss.on('connection', (ws) => {
+    let tero_id = -1;
 
     const sendMessage = (msg) => {
         // Wait until the state of the socket is not ready and send the message when it is...
