@@ -36,7 +36,6 @@ wss.on('connection', (ws) => {
     const sendMessage = (msg) => {
         // Wait until the state of the socket is not ready and send the message when it is...
         waitForSocketConnection(ws, function(){
-            console.log("message sent!!!");
             ws.send(msg);
         });
     };
@@ -52,7 +51,6 @@ wss.on('connection', (ws) => {
                     }
                     return;
                 } else {
-//                    console.log("wait for connection...")
                     waitForSocketConnection(socket, callback);
                 }
             }, 5); // wait 5 milisecond for the connection...
