@@ -42,13 +42,13 @@ wss.on('connection', (ws) => {
       }
   });
 
-//  setInterval(() => {
-//    //console.log(tero_id);
-//    connection.query(`SELECT type FROM Feedback WHERE tero_id='${tero_id}'`, function (error, results, fields) {
-//        //console.log(error);
-//        //console.log(results);
-//    }); 
-//  }, 1000);
+  setInterval(() => {
+    //console.log(tero_id);
+    connection.query(`SELECT type FROM Feedback WHERE tero_id='${tero_id}'`, function (error, results, fields) {
+        //console.log(error);
+        //console.log(results);
+    }); 
+  }, 1000);
 });
 
 
