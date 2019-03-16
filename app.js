@@ -31,24 +31,51 @@ const server = express()
 
 const wss = new SocketServer({ server });
 
+
 wss.on('connection', (ws) => {
-  console.log('Client connected');
-  ws.on('close', () => console.log('Client disconnected'));
 
-  ws.on('message', msg => {
-      if (msg.split(' ')[0] === "tero_id") {
-          tero_id = msg.split(' ')[1]; 
-      }
-  });
+    const sendMessage = (msg) => {
+        // Wait until the state of the socket is not ready and send the message when it is...
+        waitForSocketConnection(ws, function(){
+            console.log("message sent!!!");
+            ws.send(msg);
+        });
+    };
 
-  setInterval(() => {
-    console.log(`SELECT type FROM Feedback WHERE tero_id='${tero_id}'`);
-    connection.query(`SELECT type FROM Feedback WHERE tero_id='${tero_id}'`, function (error, results, fields) {
-        console.log(error);
-        console.log(results);
-        ws.send(results.length);
-    }); 
-  }, 1000);
+    // Make the function wait until the connection is made...
+    const waitForSocketConnection = (socket, callback) => {
+        setTimeout(
+            function () {
+                if (socket.readyState === 1) {
+                    console.log("Connection is made")
+                    if(callback != null){
+                        callback();
+                    }
+                    return;
+                } else {
+                    console.log("wait for connection...")
+                    waitForSocketConnection(socket, callback);
+                }
+            }, 5); // wait 5 milisecond for the connection...
+    };
+
+    console.log('Client connected');
+    ws.on('close', () => console.log('Client disconnected'));
+
+    ws.on('message', msg => {
+        if (msg.split(' ')[0] === "tero_id") {
+            tero_id = msg.split(' ')[1]; 
+        }
+    });
+
+    setInterval(() => {
+        console.log(`SELECT type FROM Feedback WHERE tero_id='${tero_id}'`);
+        connection.query(`SELECT type FROM Feedback WHERE tero_id='${tero_id}'`, function (error, results, fields) {
+            console.log(error);
+            console.log(results);
+            sendMessage(results.length);
+        }); 
+    }, 1000);
 });
 
 
