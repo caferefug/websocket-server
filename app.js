@@ -42,15 +42,12 @@ wss.on('connection', (ws) => {
 
   setInterval(() => {
     connection.query(`SELECT type FROM Feedback WHERE tero_id='${tero_id}'`, function (error, results, fields) {
+        console.log(error);
+        console.log(tero_id);
         console.log(results);
     }); 
   }, 1000);
 });
 
-setInterval(() => {
-  wss.clients.forEach((client) => {
-    client.send(new Date().toTimeString());
-  });
-}, 1000);
 
 
