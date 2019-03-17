@@ -75,7 +75,7 @@ wss.on('connection', (ws) => {
 //            console.log(error);
 //            console.log(results.length - 1);
             // 一応、テロリストが１時間以内店内にいた時、とってこないので−１する必要はない、けど自分の判断しようがないので
-            sendMessage('target ' + results.length);
+            sendMessage('target ' + (results.length-1));
         });
         console.log(`SELECT type FROM Feedback WHERE tero_id='${tero_id}'`);
         connection.query(`SELECT type FROM Feedback WHERE tero_id='${tero_id}'`, function (error, results, fields) {
