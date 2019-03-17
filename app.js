@@ -32,6 +32,7 @@ const wss = new SocketServer({ server });
 
 wss.on('connection', (ws) => {
     let tero_id = -1;
+    let beacon_id = -1;
 
     const sendMessage = (msg) => {
         // Wait until the state of the socket is not ready and send the message when it is...
@@ -63,14 +64,21 @@ wss.on('connection', (ws) => {
         if (msg.split(' ')[0] === "tero_id") {
             tero_id = msg.split(' ')[1]; 
         }
+        if (msg.split(' ')[0] === "beacon_id") {
+            beacon_id = msg.split(' ')[1]; 
+        }
     });
 
     setInterval(() => {
+        connection.query(`SELECT id FROM Targets WHERE created_at > DATE_SUB(NOW(), INTERVAL 1 HOUR) AND beacon_id='01270a4686'`, function (error, results, fields) {
+            // 一応、テロリストが１時間以内店内にいた時、とってこないので−１する必要はない、けど自分の判断しようがないので
+            sendMessage('target ' + results.length-1);
+        });
         console.log(`SELECT type FROM Feedback WHERE tero_id='${tero_id}'`);
         connection.query(`SELECT type FROM Feedback WHERE tero_id='${tero_id}'`, function (error, results, fields) {
             console.log(error);
             console.log(results);
-            sendMessage(results.length);
+            sendMessage('feedback ' + results.length);
         }); 
     }, 1000);
 });
