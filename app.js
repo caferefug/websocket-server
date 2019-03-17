@@ -70,14 +70,15 @@ wss.on('connection', (ws) => {
     });
 
     setInterval(() => {
+        console.log(`SELECT id FROM Targets WHERE created_at > DATE_SUB(NOW(), INTERVAL 1 HOUR) AND beacon_id='01270a4686'`);
         connection.query(`SELECT id FROM Targets WHERE created_at > DATE_SUB(NOW(), INTERVAL 1 HOUR) AND beacon_id='01270a4686'`, function (error, results, fields) {
+            console.log(error);
+            console.log(results);
             // 一応、テロリストが１時間以内店内にいた時、とってこないので−１する必要はない、けど自分の判断しようがないので
             sendMessage('target ' + results.length-1);
         });
         console.log(`SELECT type FROM Feedback WHERE tero_id='${tero_id}'`);
         connection.query(`SELECT type FROM Feedback WHERE tero_id='${tero_id}'`, function (error, results, fields) {
-            console.log(error);
-            console.log(results);
             sendMessage('feedback ' + results.length);
         }); 
     }, 1000);
